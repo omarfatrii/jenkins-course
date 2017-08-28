@@ -16,20 +16,23 @@ node {
     stage('test') {
       for (image in images)
        {
+        File file = new File("/home/omar/Desktop/rapport.html").withWriter('utf-8')
+         { 
+               writer -> writer.writeLine sh' /reg-linux-amd64 vulns --clair image chrome'
+         } 
+         def derniere_ligne= "${file.length()}"
         if ()
          {
-           sh '/reg-linux-amd64 vulns --clair image chrome'
+           sh 'exit 1'
          }
        }
-      
-       sh 'exit 1'
     }
   } catch(e) {
     // mark build as failed
     currentBuild.result = "FAILURE";
     // set variables
     def subject = "${env.JOB_NAME} - Build #${env.BUILD_NUMBER} ${currentBuild.result}"
-    def content = '${JELLY_SCRIPT,template="html"}'
+    def content = '${file,template="html"}'
 
     // send email
     if(to != null && !to.isEmpty()) {
