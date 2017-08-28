@@ -9,11 +9,9 @@ node {
 
   // job
   try {
-    stage('build') {
+    stage('test') {
       sh 'cd /home/omar/Desktop'
       def images = [sh './reg-linux-amd64 -k -r myregistry.com:5000 ls']
-    }
-    stage('test') {
       for (image in images)
        {
         File file = new File("/home/omar/Desktop/rapport.html").withWriter('utf-8')
