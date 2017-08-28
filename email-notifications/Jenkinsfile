@@ -2,19 +2,27 @@ node {
 
   // config 
   def to = emailextrecipients([
-          [$class: 'CulpritsRecipientProvider'],
-          [$class: 'DevelopersRecipientProvider'],
-          [$class: 'RequesterRecipientProvider']
+          [$class: 'CulpritsRecipient'],
+          [$class: 'DevelopersRecipient'],
+          [$class: 'RequesterRecipient']
   ])
 
   // job
   try {
     stage('build') {
-      println('so far so good...')
+      sh 'cd /home/omar/Desktop'
+      def images = [sh './reg-linux-amd64 -k -r myregistry.com:5000 ls']
     }
     stage('test') {
-      println('A test has failed!')
-      sh 'exit 1'
+      for (image in images)
+       {
+        if ()
+         {
+           sh '/reg-linux-amd64 vulns --clair image chrome'
+         }
+       }
+      
+       sh 'exit 1'
     }
   } catch(e) {
     // mark build as failed
